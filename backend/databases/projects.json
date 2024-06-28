@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1",
+    "name": "Project 1",
+    "startDate": "2024-06-20",
+    "endDate": "2024-06-30",
+    "status": "Forced-Closed",
+    "description": "description",
+    "startingBudget": 50000,
+    "currentCost": 40000,
+    "dailyEstimatedCost": 5000,
+    "warning": ""
+  },
+  {
+    "id": "2",
+    "name": "Project 2",
+    "startDate": "2024-06-22",
+    "endDate": "2024-07-01",
+    "status": "in-progress",
+    "description": "description",
+    "startingBudget": 20000,
+    "currentCost": 12000,
+    "dailyEstimatedCost": 2000,
+    "warning": ""
+  },
+  {
+    "id": "3",
+    "name": "Project 3",
+    "startDate": "2024-06-23",
+    "endDate": "2024-07-12",
+    "status": "Planning",
+    "description": "description",
+    "startingBudget": 10000,
+    "currentCost": 5000,
+    "dailyEstimatedCost": 1000,
+    "warning": "Not engouh budget"
+  },
+  {
+    "id": "0e0dfb98-7a95-4554-b0ec-ef9f885f2368",
+    "name": "name",
+    "description": "desc",
+    "startDate": "2024-06-23",
+    "endDate": "2024-07-12",
+    "startingBudget": "50000",
+    "currentCost": "15000",
+    "status": "completed"
+  }
+]
