@@ -1,7 +1,8 @@
 const express = require('express');
 const { NotFoundError, NotAuthenticated } = require('./middleware/errors')
 const routes = require('./routes/projects');
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
+const statusRoutes = require('./routes/statistics');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
@@ -17,6 +18,7 @@ app.use((_, res, next) => {
 
 app.use('/projects', routes);
 app.use("/auth", authRoutes);
+app.use("/statistics", statusRoutes);
 
 app.use((_, res, next) => {
     const error = new NotFoundError('Not Found');

@@ -109,7 +109,7 @@ exports.addProject = async (req, res, next) => {
 exports.statistics = async (_, res, next) => {
   try {
     const projects = await Project.getAllProjects();
-    const statuses = ["planning", "completed", "force-closed", "in-progress"];
+    const statuses = ["planning", "completed", "forced-closed", "in-progress"];
 
     const projectsByStatus = statuses.reduce((acc, status) => {
       acc[status] = 0;
@@ -136,7 +136,9 @@ exports.statistics = async (_, res, next) => {
 exports.statisticsPerRangePerBudget = async (req, res, next) => {
   try {
     const status = req.params.status;
-    const projects = await Project.getAllProjects().filter(proj => proj.status.toLowerCase() == status);
+    console.log(`Received status: ${status}`);
+    const projects = await Project.getAllProjects();
+    const budgetProjects = projects.filter(proj => proj.status.toLowerCase() == status);
     const ranges = ["0-19999", "20000-1000000"];
 
     const projectsByBudgetRange = ranges.reduce((acc, range) => {
@@ -144,7 +146,7 @@ exports.statisticsPerRangePerBudget = async (req, res, next) => {
       return acc;
     }, {});
 
-    projects.forEach(proj => {
+    budgetProjects.forEach(proj => {
       const budget = proj.startingBudget;
       ranges.forEach(range => {
         const [min, max] = range.split('-').map(Number);
@@ -166,7 +168,8 @@ exports.statisticsPerRangePerBudget = async (req, res, next) => {
 
 exports.statisticsCompleted = async (req, res, next) => {
   try {
-    const projects = await Project.getAllProjects().filter(proj => proj.status.toLowerCase() == "completed");
+    const projects = await Project.getAllProjects();
+    const comProjects = projects.filter(proj => proj.status.toLowerCase() == "completed")
     const statuses = ["over-budget", "budget", "remained"];
 
     const projectsByStatus = statuses.reduce((acc, status) => {
@@ -174,7 +177,7 @@ exports.statisticsCompleted = async (req, res, next) => {
       return acc;
     }, {});
 
-    projects.forEach(proj => {
+    comProjects.forEach(proj => {
       const { startingBudget, currentCost, dailyEstimatedCost, startDate, endDate } = proj;
       const projectDuration = (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) + 1;
       const estimatedTotalCost = projectDuration * dailyEstimatedCost;
@@ -186,6 +189,11 @@ exports.statisticsCompleted = async (req, res, next) => {
       } else {
         projectsByStatus["remained"]++;
       }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: projectsByStatus
     });
 
   } catch (err) {

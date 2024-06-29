@@ -11,9 +11,5 @@ router.get('/:projectId', ProjectsController.getProjectById);
 router.patch('/:projectId', ProjectsController.updateProject);
 router.post('/', checkAuth, ProjectsController.addProject); // jwt protected
 
-router.get('/statistics', ProjectsController.statistics);
-router.get('/statistics/status', ProjectsController.statisticsPerRangePerBudget);
-router.get('/statistics/completed', ProjectsController.statisticsCompleted);
-router.get('/statistics/daily', ProjectsController.dailyStatistics);
 
 module.exports = router;
